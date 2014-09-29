@@ -7,26 +7,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     </head>
     <body ng-app="steps">
-        <div ng-controller="stepController"></div>
-        <steps>
-        <step-item title="First step title">First step text!!!
-            <div class="block" ng-class="{ 'has-error' : step1.body.$invalid && !step1.body.$pristine}">
-                <label class="control-label">Question text</label>
-                <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
-                <p ng-show="step1.body.$error.required && !step1.body.$pristine" class="help-block">Title is required.</p>
-                <p ng-show="step1.body.$error.maxlength && !step1.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p>
-            </div>
-        </step-item>
-        <step-item title="Second step title">Second step text!!!
-            <div class="block" ng-class="{ 'has-error' : step1.body.$invalid && !step1.body.$pristine}">
-                <label class="control-label">Question text</label>
-                <!-- <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140"> -->
-                <p ng-show="step1.body.$error.required && !step1.body.$pristine" class="help-block">Title is required.</p>
-                <p ng-show="step1.body.$error.maxlength && !step1.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p>
-            </div>
-        </step-item>
-        <step-item title="Third step title">Third step text!!!</step-item>
-        </steps>
+        <div ng-controller="stepController">
+            <steps settings="stepFormSettings">
+                <step-item title="First step title">First step text!!!
+                    <div class="block" ng-class="{ 'has-error' : stepFormSettings.mainForm.stepForm.body.$invalid && !stepFormSettings.mainForm.stepForm.body.$pristine}">
+                        <label class="control-label">Question text</label>
+                        <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
+                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.required && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title is required.</p>
+                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.maxlength && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p>
+                        <span>Form-child: {{stepForm.$valid}}</span>
+                    </div>
+                </step-item>
+                <step-item title="Second step title">Second step text!!!
+                    <div class="block" ng-class="{ 'has-error' : stepFormSettings.mainForm.stepForm.body.$invalid && !stepFormSettings.mainForm.stepForm.body.$pristine}">
+                        <label class="control-label">Question text</label>
+                        <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
+                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.required && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title is required.</p>
+                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.maxlength && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p>
+                        span>Form step: {{stepFormSettings.mainForm.stepForm.$valid}}</span>
+                    </div>
+                </step-item>
+                <step-item title="Third step title">Third step text!!!</step-item>
+                <span>Form: {{stepFormSettings.mainForm.$valid}}</span><br>
+                <span>Form step: {{stepFormSettings.mainForm.stepForm.$valid}}</span>
+            </steps>
+        </div>
         
         <script src="angular.js"></script>
         <script src="src/angularModule.js"></script>
@@ -36,6 +41,7 @@
         angular.module('steps', ['vig-angular-steps']);
         angular.module('steps').controller('stepController', ['$scope',
         function($scope){
+           
         }
         ]);
         </script>

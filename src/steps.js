@@ -1,22 +1,29 @@
 'use strict';
 
-angular.module('vig-angular-steps').directive('steps', function($compile) {
+angular.module('vig-angular-steps').directive('steps', function() {
+
+	//default data
+	var defaultFormName = "stepsForm",
+		defaultSettings = {
+			currentStep: 1
+		};
+
 	return {
 		restrict: 'EA',
 		// templateUrl: function(element, attrs) {
 		// 	return attrs.template || "src/steps.html";
 		// },
-		template: '<form name="stepsform">'
+		template: '<form name="stepsForm">'
 				    +'<div class="wizard clearfix">'
 				        +'<ul class="steps">'
-				            +'<li ng-class="{active: settings.currentStep === {{$index + 1}} }" ng-repeat="step in steps" ng-click="goToStep($index + 1, stepsform.$valid)">'
+				            +'<li ng-class="{active: settings.currentStep === {{$index + 1}} }" ng-repeat="step in steps" ng-click="goToStep($index + 1, stepsForm.$valid)">'
 				                +'<span  class="badge" ng-class="{\'badge-info\':settings.currentStep === {{$index + 1}}, \'badge-success\': settings.currentStep > {{$index + 1}} }">{{$index + 1}}</span>'
 				                +'{{step.title}}'
 				            +'</li>'
 				        +'</ul>'
 				        +'<div class="actions visible-lg-block">'
-				            +'<button type="button" class="btn btn-white btn-xs btn-prev" ng-click="prevStep()" ng-disabled="settings.currentStep == 1 || stepsform.$invalid">Prev</button>'
-				            +'<button type="button" class="btn btn-white btn-xs btn-next" ng-click="nextStep()" ng-disabled="settings.currentStep == steps.length || stepsform.$invalid">Next</button>'
+				            +'<button type="button" class="btn btn-white btn-xs btn-prev" ng-click="prevStep()" ng-disabled="settings.currentStep == 1 || stepsForm.$invalid">Prev</button>'
+				            +'<button type="button" class="btn btn-white btn-xs btn-next" ng-click="nextStep()" ng-disabled="settings.currentStep == steps.length || stepsForm.$invalid">Next</button>'
 				        +'</div>'
 				    +'</div>'
 				    +'<div class="step-content" ng-transclude>'
@@ -26,33 +33,28 @@ angular.module('vig-angular-steps').directive('steps', function($compile) {
 			settings: '=?'
 		},
 		transclude: true,
-		priority: 2000,
 		compile: function compile(cElement, cAttrs, transclude) {
 			console.log('Parent compile')
-			// console.log(cElement[0].outerHTML)
+
 			return {
 				pre: function preLink($scope, element, attrs) {
-					console.log('parent preLink')
-					// console.log(element[0].outerHTML)
-
+					console.log('Parent preLink')
 				},
 				post: function postLink($scope, element, attrs) {
-					// $compile(element.contents(), transclude)($scope);
-					console.log('parent postlink')
-					// console.log(element[0].outerHTML)
+					console.log('Parent postLink')
+
+					$scope.settings.mainForm = $scope[defaultFormName];
+					$scope.settings.stepForm = $scope.formStep;
+
+					console.log($scope)
 				}
 			}
 		},
 		controller: ['$scope', '$element',
 			function($scope, $element) {
 
-				//default settings
-				if(!$scope.settings){
-					$scope.settings = {
-						currentStep : 1,
-						formName : 'steps'
-					};
-				}
+				
+				$scope.settings = angular.extend(defaultSettings, $scope.settings);
 
 				//number of steps
 				$scope.steps = [];
@@ -71,8 +73,6 @@ angular.module('vig-angular-steps').directive('steps', function($compile) {
 				};
 
 				$scope.goToStep = function(stepNum, canSet) {
-					console.log('click click');
-					console.log(stepNum);
 					canSet = typeof canSet != undefined? canSet : true;
 					if (stepNum !== $scope.settings.currentStep 
 						&& (stepNum <= $scope.steps.length && stepNum > 0) 
@@ -84,7 +84,6 @@ angular.module('vig-angular-steps').directive('steps', function($compile) {
 				$scope.nextStep = function() {
 					if ($scope.settings.currentStep < $scope.steps.length) {
 						$scope.settings.currentStep += 1;
-						console.log($scope.settings.currentStep)
 					}
 				};
 
