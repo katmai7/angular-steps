@@ -8,22 +8,15 @@ angular.module('vig-angular-steps').directive('stepItem', function($compile) {
 			title: '@'
 		},
 		transclude: true,
-		priority: 1500,
 		require: '^steps',
 		compile: function compile(cElement, cAttrs, transclude) {
-			console.log('Child  compile')
 			return {
-				pre: function preLink($scope, element, attrs, steps) {
-					console.log('Child  prelink')
+				pre: function preLink($scope, $element, $attrs, steps) {
 				},
-				post: function postLink($scope, element, attrs, steps) {
-					console.log('Child  postLink')
-
+				post: function postLink($scope, $element, $attrs, steps) {
 					$scope.stepNum = steps.addStep($scope);
 
 					$scope.settings = steps.getSettings();
-					console.log('AAAAAAAAAAAAAAAAAAA')
-					console.log($scope)
 				}
 			}
 		}

@@ -12,24 +12,23 @@
                 <step-item title="First step title">First step text!!!
                     <div class="block" ng-class="{ 'has-error' : stepFormSettings.mainForm.stepForm.body.$invalid && !stepFormSettings.mainForm.stepForm.body.$pristine}">
                         <label class="control-label">Question text</label>
-                        <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
+                     <!--    <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
                         <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.required && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title is required.</p>
-                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.maxlength && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p>
-                        <span>Form-child: {{stepForm.$valid}}</span>
-                    </div>
+                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.maxlength && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p> -->
+                        <button steps-next>Next</button>
+                    </div> 
                 </step-item>
                 <step-item title="Second step title">Second step text!!!
                     <div class="block" ng-class="{ 'has-error' : stepFormSettings.mainForm.stepForm.body.$invalid && !stepFormSettings.mainForm.stepForm.body.$pristine}">
                         <label class="control-label">Question text</label>
-                        <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
+                     <!--    <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
                         <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.required && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title is required.</p>
-                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.maxlength && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p>
-                        span>Form step: {{stepFormSettings.mainForm.stepForm.$valid}}</span>
+                        <p ng-show="stepFormSettings.mainForm.stepForm.body.$error.maxlength && !stepFormSettings.mainForm.stepForm.body.$pristine" class="help-block">Title cannot be longer than 140 characters.</p> -->
+                        <button steps-previous>Prev</button>
+                        <button steps-next>Next</button>
                     </div>
                 </step-item>
                 <step-item title="Third step title">Third step text!!!</step-item>
-                <span>Form: {{stepFormSettings.mainForm.$valid}}</span><br>
-                <span>Form step: {{stepFormSettings.mainForm.stepForm.$valid}}</span>
             </steps>
         </div>
         
@@ -37,6 +36,7 @@
         <script src="src/angularModule.js"></script>
         <script src="src/steps.js"></script>
         <script src="src/steps-item.js"></script>
+        <script src="src/steps-buttons.js"></script>
         <script type="text/javascript">
         angular.module('steps', ['vig-angular-steps']);
         angular.module('steps').controller('stepController', ['$scope',
