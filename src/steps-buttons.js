@@ -8,8 +8,6 @@ function stepsButtonDirective(action) {
                 replace: false,
                 require: '^steps',
                 link: function($scope, $element, $attrs, steps) {
-                	console.log('init butttons');
-
                     $element.on("click", function(e) {
                         e.preventDefault();
                         $scope.$apply(function() {

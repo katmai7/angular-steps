@@ -5,7 +5,8 @@ angular.module('vig-angular-steps').directive('stepItem', function($compile) {
 		restrict: 'EA',
 		template: '<ng-form ng-if="stepNum == settings.currentStep" name="stepForm"><div ng-transclude></div></ng-form>',
 		scope: {
-			title: '@'
+			title: '@',
+			onInitStep: '&'
 		},
 		transclude: true,
 		require: '^steps',

@@ -18,7 +18,7 @@
                         <button steps-next>Next</button>
                     </div> 
                 </step-item>
-                <step-item title="Second step title">Second step text!!!
+                <step-item title="Second step title" on-init-step = "secondStepInit()">Second step text!!!
                     <div class="block" ng-class="{ 'has-error' : stepFormSettings.mainForm.stepForm.body.$invalid && !stepFormSettings.mainForm.stepForm.body.$pristine}">
                         <label class="control-label">Question text</label>
                      <!--    <input type="text" name="body" placeholder="Question" class="form-control" ng-model="editQuestion.body" required="" ng-maxlength="140">
@@ -41,7 +41,9 @@
         angular.module('steps', ['vig-angular-steps']);
         angular.module('steps').controller('stepController', ['$scope',
         function($scope){
-           
+           $scope.secondStepInit = function(){
+                console.log('second step init function');
+           };
         }
         ]);
         </script>

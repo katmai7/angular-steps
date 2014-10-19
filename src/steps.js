@@ -5,7 +5,9 @@ angular.module('vig-angular-steps').directive('steps', function() {
 	//default data
 	var defaultFormName = "stepsForm",
 		defaultSettings = {
-			currentStep: 1
+			currentStep: 1,
+			isLast: false,
+			isFirs: false
 		};
 
 	return {
@@ -16,7 +18,7 @@ angular.module('vig-angular-steps').directive('steps', function() {
 		template: '<form name="stepsForm">'
 				    +'<div class="wizard clearfix">'
 				        +'<ul class="steps">'
-				            +'<li ng-class="{active: settings.currentStep === {{$index + 1}} }" ng-repeat="step in steps" ng-click="goTo($index + 1, stepsForm.$valid)">'
+				            +'<li ng-class="{active: settings.currentStep === {{$index + 1}}, complete:  settings.currentStep > {{$index + 1}}}" ng-repeat="step in steps" ng-click="goTo($index + 1, stepsForm.$valid)">'
 				                +'<span  class="badge" ng-class="{\'badge-info\':settings.currentStep === {{$index + 1}}, \'badge-success\': settings.currentStep > {{$index + 1}} }">{{$index + 1}}</span>'
 				                +'{{step.title}}'
 				            +'</li>'
@@ -42,9 +44,9 @@ angular.module('vig-angular-steps').directive('steps', function() {
 				}
 			}
 		},
-
 		controller: ['$scope', '$element',
 			function($scope, $element) {
+				var that = this;
 
 				$scope.settings = angular.extend(defaultSettings, $scope.settings);
 
@@ -65,28 +67,28 @@ angular.module('vig-angular-steps').directive('steps', function() {
 				};
 
 				$scope.goTo = this.goTo = function(stepNum, canSet) {
-					canSet = typeof canSet != undefined? canSet : true;
+					canSet = !!canSet ? canSet : true;
 					if (stepNum !== $scope.settings.currentStep 
 						&& (stepNum <= $scope.steps.length && stepNum > 0) 
 						&& canSet) {
 						$scope.settings.currentStep = stepNum;
+						$scope.settings.isLast = $scope.settings.currentStep == $scope.steps.length;
+						$scope.settings.isFirst = $scope.settings.currentStep == 1;
+						$scope.steps[stepNum - 1].onInitStep();
 					}
 				};
 
 				$scope.next = this.next = function() {
 					if ($scope.settings.currentStep < $scope.steps.length) {
-						$scope.settings.currentStep += 1;
+						that.goTo($scope.settings.currentStep + 1);
 					}
-					console.log($scope.settings.currentStep);
 				};
 
 				$scope.previous = this.previous = function() {
 					if ($scope.settings.currentStep > 1) {
-						$scope.settings.currentStep -= 1;
+						this.goTo($scope.settings.currentStep - 1);
 					}
-					console.log($scope.settings.currentStep);
 				};
-
 			}
 		]
 	};
